@@ -1,0 +1,69 @@
+# Create a n*m grid
+# Two agents start at random locations of this grid
+# The agents only move straight towards the top
+# When there is no option to move straight, the agents takes a right turn
+# When there is no right turn the agents take a left turn.
+# Find the time and location when the two agents meet.
+# Inputs:
+#     Length and breadth of the grid.
+#     Distance between two grid points.
+#     Velocity of the agents.
+# Output:
+#     Time at which the two agents meet.
+#     Grid point where the two agents meet.
+# What is the time step of the simulation?
+import random
+import copy
+
+x = int(input("Enter the length of the grid "))
+y = int(input("Enter the breadth of the grid "))
+dist = int(input("Enter the distance between two grid points "))
+vel = int(input("Enter the velocity, in multiples of grid distance "))
+print("The grid is as follows")
+for i in range(y):
+    listq = list(range(1, x+1))
+    print(listq)
+# the origin of the grid is at (1,1)
+gridloc_A = [random.choice(range(1, x+1)), random.choice(range(1, y+1))]
+gridloc_B = [random.choice(range(1, x+1)), random.choice(range(1, y+1))]
+print(gridloc_B, gridloc_A)
+
+time = 0
+grid_loc = [0, 0]
+
+def location_updater(loc):
+
+    if y-loc[1] > 0:
+        # move up
+        loc[1] += 1
+    elif x-loc[0] > 0:
+        # move right
+        loc[0] += 1
+    else:
+        # move left
+        loc[0] -= 1
+    return loc
+
+while(0==0):
+    # the loop continues till the agents meet
+    # check whether agents start at the same location
+    if gridloc_A == gridloc_B:
+        print("The agents meet at the grid point", gridloc_A)
+        print("The agents meet at time", time)
+        break
+
+    last_grid_loc_A = copy.deepcopy(gridloc_A)
+    gridloc_A = location_updater(gridloc_A)
+    gridloc_B = location_updater(gridloc_B)
+    time += 1
+    if gridloc_A == gridloc_B:
+        print("The agents meet at the grid point", gridloc_A)
+        print("The agents meet at time", time)
+        break
+    elif gridloc_B == last_grid_loc_A:
+        # the agents exchanged the grid points and must have met in between
+        print("The agents meet at the grid point", [(gridloc_A[0]+gridloc_B[0])/2, (gridloc_A[1]+gridloc_B[1])/2])
+        print("The agents meet at time", time)
+        break
+    else:
+        continue
